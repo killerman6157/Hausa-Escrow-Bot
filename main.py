@@ -55,7 +55,7 @@ def confirm_payment_by_buyer(message):
     )
     bot.send_message(message.chat.id, "✅ Mun sanar da admin, don Allah jira tabbatarwa.")
 
-@bot.message_handler(commands=lambda cmd: cmd.startswith("confirm_"))
+@bot.message_handler(func=lambda message: message.text and message.text.startswith("/confirm_"))
 def admin_confirm(message):
     if message.from_user.id != ADMIN_ID:
         return
