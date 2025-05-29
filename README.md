@@ -1,19 +1,17 @@
 # Hausa Escrow Bot 🤖
 
-Wannan Telegram bot ne da ke sauƙaƙa gudanar da amanar ciniki (escrow) tsakanin mai siye da mai sayarwa.
+A simple Telegram bot for handling basic escrow transactions in Hausa.
 
-## Features
-- 🛡️ Escrow deal flow
-- 🔐 Admin confirmation
-- ✅ Buyer confirmation before fund release
-- 🚫 Ban functionality
-- 📥 Logs to a private channel
+## Files
+- `main.py`
+- `requirements.txt`
+- `.gitignore`
+- `.env.example`
+- `render.yaml`
+- `README.md`
 
-## Yadda Ake Amfani
-1. Clone repo ɗin nan.
-2. Create `.env` file using `.env.example`.
-3. Cika `BOT_TOKEN`, `ADMIN_ID`, `LOG_CHANNEL_ID`.
-4. Run with:
+## Setup
 
-```bash
-python main.py
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
