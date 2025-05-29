@@ -5,13 +5,12 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 
 # Load environment variables from .env
 load_dotenv()
-API_TOKEN    = os.getenv("BOT_TOKEN")
-ADMIN_ID     = int(os.getenv("ADMIN_ID"))
-LOG_CHANNEL  = int(os.getenv("LOG_CHANNEL_ID"))
+API_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
 
 bot = telebot.TeleBot(API_TOKEN)
 
-user_state   = {}
+user_state = {}
 banned_users = set()
 
 @bot.message_handler(commands=['start'])
@@ -36,7 +35,7 @@ def start_deal(message):
 @bot.message_handler(func=lambda m: m.chat.id in user_state and user_state[m.chat.id]['step'] == 'awaiting_seller')
 def ask_payment(message):
     user_state[message.chat.id]['seller'] = message.text
-    user_state[message.chat.id]['step']  = 'awaiting_proof'
+    user_state[message.chat.id]['step'] = 'awaiting_proof'
     info = (
         f"🔐 Escrow Deal Da Aka Fara!\n"
         f"Seller: {message.text}\n\n"
@@ -47,7 +46,7 @@ def ask_payment(message):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(KeyboardButton("💸 Na biya Admin"))
     bot.send_message(message.chat.id, info, reply_markup=markup, parse_mode="Markdown")
-    bot.send_message(LOG_CHANNEL, f"📥 Sabon deal - Buyer @{message.from_user.username} da seller {message.text}")
+    bot.send_message(ADMIN_ID, f"📥 Sabon deal - Buyer @{message.from_user.username} da seller {message.text}")
 
 @bot.message_handler(func=lambda m: m.text == "💸 Na biya Admin")
 def confirm_payment_by_buyer(message):
