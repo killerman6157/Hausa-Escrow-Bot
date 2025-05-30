@@ -1,4 +1,3 @@
-
 import os
 import logging
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
@@ -23,34 +22,23 @@ deal_state = {
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [[
-        KeyboardButton("/startdeal"), 
+        KeyboardButton("/startdeal"),
         KeyboardButton("/track")
     ], [
-        KeyboardButton("/howitworks"), 
+        KeyboardButton("/howitworks"),
         KeyboardButton("📞 Tuntuɓi Admin")
     ]]
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True)
     await update.message.reply_text(
-        "🤖 *Barka da zuwa Hausa Escrow Bot!*
-
-"
-        "🔐 Wannan bot yana kare kuɗinka da kayanka har sai an tabbatar da juna.
-"
-        "⚠️ Kada ka tura kuɗi kai tsaye. Yi amfani da bot domin amana da tsaro.
-
-"
-        "Zaɓi daga cikin zaɓuɓɓuka ko rubuta umarni:
-"
-        "/startdeal - Fara sabuwar ciniki
-"
-        "/track - Duba matsayin ciniki
-"
-        "/howitworks - Yadda escrow ke aiki
-"
-        "/confirm - Buyer ya tabbatar da biya
-"
-        "/received - Buyer ya tabbatar da karɓar kaya
-"
+        "🤖 *Barka da zuwa Hausa Escrow Bot!*\n\n"
+        "🔐 Wannan bot yana kare kuɗinka da kayanka har sai an tabbatar da juna.\n"
+        "⚠️ Kada ka tura kuɗi kai tsaye. Yi amfani da bot domin amana da tsaro.\n\n"
+        "Zaɓi daga cikin zaɓuɓɓuka ko rubuta umarni:\n"
+        "/startdeal - Fara sabuwar ciniki\n"
+        "/track - Duba matsayin ciniki\n"
+        "/howitworks - Yadda escrow ke aiki\n"
+        "/confirm - Buyer ya tabbatar da biya\n"
+        "/received - Buyer ya tabbatar da karɓar kaya\n"
         "/dispute - Idan matsala ta taso",
         reply_markup=markup,
         parse_mode="Markdown"
@@ -58,25 +46,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def how_it_works(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "📘 *YADDA BOT ƊIN HAUSA ESCROW KE AIKI:*
-
-"
-        "1️⃣ Buyer da Seller su ƙirƙiri group, su ƙara bot
-"
-        "2️⃣ Buyer: `/buyer <wallet address>`
-"
-        "3️⃣ Seller: `/seller <bank name account number - sunan mai asusu>`
-"
-        "4️⃣ Buyer ya tura kuɗi zuwa admin, sannan ya rubuta `/confirm`
-"
-        "5️⃣ Admin ya tabbatar da biyan kuɗi, sai ya sanar da Seller ya tura kaya
-"
-        "6️⃣ Buyer ya rubuta `/received` idan ya karɓi kaya
-"
-        "7️⃣ Admin zai tura kuɗi zuwa Seller. Ciniki ya kammala lafiya.
-
-"
-        "📞 *Tuntuɓar admin kai tsaye:* @{ADMIN_USERNAME}",
+        "📘 *YADDA BOT ƊIN HAUSA ESCROW KE AIKI:*\n\n"
+        "1️⃣ Buyer da Seller su ƙirƙiri group, su ƙara bot\n"
+        "2️⃣ Buyer: `/buyer <wallet address>`\n"
+        "3️⃣ Seller: `/seller <bank name account number - sunan mai asusu>`\n"
+        "4️⃣ Buyer ya tura kuɗi zuwa admin, sannan ya rubuta `/confirm`\n"
+        "5️⃣ Admin ya tabbatar da biyan kuɗi, sai ya sanar da Seller ya tura kaya\n"
+        "6️⃣ Buyer ya rubuta `/received` idan ya karɓi kaya\n"
+        "7️⃣ Admin zai tura kuɗi zuwa Seller. Ciniki ya kammala lafiya.\n\n"
+        f"📞 *Tuntuɓar admin kai tsaye:* {ADMIN_USERNAME}",
         parse_mode="Markdown"
     )
 
@@ -106,8 +84,7 @@ async def confirm(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if deal_state["status"] == "awaiting_payment":
         deal_state["status"] = "awaiting_delivery"
         await update.message.reply_text(
-            "💰 Buyer ya tabbatar da biyan kuɗi.
-"
+            "💰 Buyer ya tabbatar da biyan kuɗi.\n"
             "Admin zai tabbatar sannan ya sanar da Seller da ya tura kaya ko crypto."
         )
     else:
@@ -117,8 +94,7 @@ async def received(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if deal_state["status"] == "awaiting_delivery":
         deal_state["status"] = "completed"
         await update.message.reply_text(
-            "📦 Buyer ya karɓi kaya. Ana jiran admin ya tura kuɗi zuwa Seller.
-"
+            "📦 Buyer ya karɓi kaya. Ana jiran admin ya tura kuɗi zuwa Seller.\n"
             "🤝 Ciniki zai kammala nan ba da jimawa ba."
         )
     else:
@@ -126,16 +102,11 @@ async def received(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def track(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        f"📍 *Matsayin Ciniki:*
-"
-        f"🔹 Buyer Info: {'✅' if deal_state['buyer_wallet'] else '⏳'}
-"
-        f"🔹 Seller Info: {'✅' if deal_state['seller_account'] else '⏳'}
-"
-        f"💰 Payment: {'✅' if deal_state['status'] in ['awaiting_delivery', 'completed'] else '⏳'}
-"
-        f"📦 Delivery: {'✅' if deal_state['status'] == 'completed' else '⏳'}
-"
+        f"📍 *Matsayin Ciniki:*\n"
+        f"🔹 Buyer Info: {'✅' if deal_state['buyer_wallet'] else '⏳'}\n"
+        f"🔹 Seller Info: {'✅' if deal_state['seller_account'] else '⏳'}\n"
+        f"💰 Payment: {'✅' if deal_state['status'] in ['awaiting_delivery', 'completed'] else '⏳'}\n"
+        f"📦 Delivery: {'✅' if deal_state['status'] == 'completed' else '⏳'}\n"
         f"🔒 Status: {deal_state['status'].replace('_', ' ').title()}",
         parse_mode="Markdown"
     )
@@ -144,8 +115,7 @@ async def dispute(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"⚠️ Idan ka samu matsala, tuntuɓi admin: {ADMIN_USERNAME}")
 
 async def contact_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(f"📞 Don tuntuɓar admin kai tsaye:
-👉 {ADMIN_USERNAME}")
+    await update.message.reply_text(f"📞 Don tuntuɓar admin kai tsaye:\n👉 {ADMIN_USERNAME}")
 
 async def error_handler(update: object, context: CallbackContext):
     logger.error("Exception while handling update:", exc_info=context.error)
