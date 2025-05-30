@@ -1,4 +1,3 @@
-
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
@@ -13,19 +12,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]]
     markup = ReplyKeyboardMarkup(reply_keyboard, resize_keyboard=True)
     await update.message.reply_text(
-        "🤖 *Hausa Escrow Bot*
-
-Zabi daya daga cikin zaɓuɓɓuka ko ka rubuta umarni:
-
-"
-        "/howitworks - Yadda bot ɗin ke aiki
-"
-        "/buyer <wallet address>
-"
-        "/seller <bank details>
-"
-        "/confirm - Buyer ya tabbatar
-"
+        "🤖 *Hausa Escrow Bot*\n\n"
+        "Zabi daya daga cikin zaɓuɓɓuka ko ka rubuta umarni:\n\n"
+        "/howitworks - Yadda bot ɗin ke aiki\n"
+        "/buyer <wallet address>\n"
+        "/seller <bank details>\n"
+        "/confirm - Buyer ya tabbatar\n"
         "/dispute - Idan matsala ta taso",
         reply_markup=markup,
         parse_mode="Markdown"
@@ -33,30 +25,20 @@ Zabi daya daga cikin zaɓuɓɓuka ko ka rubuta umarni:
 
 async def how_it_works(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "📌 *YADDA BOT ƊIN KE AIKI*
-
-"
-        "1️⃣ Buyer da Seller su kirkiro group su ƙara bot
-"
-        "2️⃣ Buyer: /buyer WalletAddress
-"
-        "    Seller: /seller BankName AccountNumber – Sunan mai asusu
-"
-        "3️⃣ Buyer ya tura kuɗi zuwa admin (escrow)
-"
-        "4️⃣ Admin ya tabbatar, seller ya tura kaya/crypto
-"
-        "5️⃣ Buyer ya tabbatar da karɓa da /confirm
-"
-        "6️⃣ Admin ya tura kuɗi zuwa seller
-"
+        "📌 *YADDA BOT ƊIN KE AIKI*\n\n"
+        "1️⃣ Buyer da Seller su kirkiro group su ƙara bot\n"
+        "2️⃣ Buyer: /buyer WalletAddress\n"
+        "    Seller: /seller BankName AccountNumber – Sunan mai asusu\n"
+        "3️⃣ Buyer ya tura kuɗi zuwa admin (escrow)\n"
+        "4️⃣ Admin ya tabbatar, seller ya tura kaya/crypto\n"
+        "5️⃣ Buyer ya tabbatar da karɓa da /confirm\n"
+        "6️⃣ Admin ya tura kuɗi zuwa seller\n"
         "7️⃣ Idan matsala ta faru, a rubuta /dispute",
         parse_mode="Markdown"
     )
 
 async def contact_admin(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(f"📞 Don tuntuɓar admin kai tsaye:
-👉 {ADMIN_USERNAME}")
+    await update.message.reply_text(f"📞 Don tuntuɓar admin kai tsaye:\n👉 {ADMIN_USERNAME}")
 
 async def buyer(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
