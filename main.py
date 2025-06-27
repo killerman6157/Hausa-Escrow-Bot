@@ -59,7 +59,7 @@ def save_deal(deal_data):
         cursor.execute('''
             INSERT OR REPLACE INTO deals (chat_id, buyer_id, buyer_username, buyer_address, seller_id, seller_username, seller_account, stage)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ', (
+        ''', (
             deal_data['chat_id'], deal_data['buyer_id'], deal_data['buyer_username'], deal_data['buyer_address'],
             deal_data.get('seller_id'), deal_data.get('seller_username'), deal_data.get('seller_account'), deal_data['stage']
         ))
@@ -196,8 +196,8 @@ MESSAGES = {
         "no_deal_to_cancel": "❗ Babu bayanin ciniki a nan da za a soke.",
 
         "choose_language": "Please choose your language / Da fatan zaɓi yarenka:",
-        "language_set_ha": "An saita yarenka. Da fatan za ka share bayanai (clear data) kuma ka sake danna /start.",
-        "language_set_en": "Your language has been set up. Please clear data and click /start again."
+        "language_set_ha": "An saita yarenka.",
+        "language_set_en": "Your language has been set up."
     },
     "EN": {
         "welcome": "⚜️ Hausa Escrow Bot ⚜️ v.1\n\nWelcome to Hausa Escrow Bot! This bot provides secure (escrow) services for your trades on Telegram. 🔒\n\n💰 *ESCROW FEES:*\n- 5% if the amount exceeds $100\n- $5 if it's less than $100\n\n🌟 *UPDATES - PROOF:*\n✅ COMPLETED TRADES: 0\n⚖️ DISPUTES RESOLVED: 0\n\n🛒 Type /buyer address or /seller account\n📜 Type /menu to see all features\n\n@HausaEscrowBot – For secure trading!",
@@ -275,4 +275,6 @@ MESSAGES = {
         "current_status": "📊 Your status in Hausa Escrow: {status}",
         "no_deal_record": "No trade record at the moment.",
         "you_are_buyer": "You are the *buyer* in a trade in group: `{chat_id}`. Stage: *{stage}*.",
-        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}`.
+        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}`. Stage: *{stage}*.",
+
+        "deal_cancelled_message": "❗ Trade between @{buyer_username} and @{seller_usern
