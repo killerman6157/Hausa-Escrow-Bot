@@ -1,7 +1,7 @@
 import os
 import random
 import string
-import sqlite3 # New import for SQLite
+import sqlite3
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder,
@@ -112,21 +112,27 @@ def get_user_language(user_id):
         result = cursor.fetchone()
         return result[0] if result else 'HA' # Default to Hausa if not found
 
-
 # --- Multilingual Messages ---
 MESSAGES = {
     "HA": {
         "welcome": "⚜️ Hausa Escrow Bot ⚜️ v.1\n\nBarka da zuwa Hausa Escrow Bot! Wannan bot yana ba da sabis na tsaro (escrow) don cinikayyarka a Telegram. 🔒\n\n💰 *KUDIN ESCROW:*\n- 5% idan kuɗin ya haura $100\n- $5 idan ya ƙasa da $100\n\n🌟 *SABUNTAWA - SHAIDA:*\n✅ CINIKAYYAR DA AKA KAMMALA: 0\n⚖️ RIGIMOMIN DA AKA SASANTA: 0\n\n🛒 Rubuta /buyer address ko /seller account\n📜 Rubuta /menu don ganin dukkan fasaloli\n\n@HausaEscrowBot – Domin ciniki cikin aminci!",
         "start_escrow_button": "🚀 Fara Escrow",
         "how_it_works_button": "📘 Yadda Escrow ke aiki",
-        "security_guide_button": "💬 Jagorar Tsaro", # Updated text for the button
+        "security_guide_button": "💬 Jagorar Tsaro",
         "contact_admin_button": "📞 Tuntuɓi Admin",
         "create_group_button": "👥 Fara Ciniki (Create Group)",
 
-        "how_it_works_text": "📘 *YADDA ESCROW KE AIKI:*\n1. Mai sayarwa ya bayar da bayani\n2. Mai siya ya amince ya biya\n3. Admin ya tabbatar da biya\n4. Mai sayarwa ya tura kaya\n5. Buyer ya tabbatar\n6. Admin ya saki kuɗi\n7. Ciniki ya ƙare cikin nasara",
-        # Updated Security Guide Text
+        "how_it_works_text": "📘 *YADDA ESCROW KE AIKI:*\n"
+                             "Wannan tsari yana taimakawa wajen tabbatar da aminci ga mai saye da mai siyarwa.\n\n"
+                             "1. *Mai Siyarwa (Seller) Ya Bayar da Bayanai:* Mai siyarwa ya bada cikakken bayani kan abin da yake siyarwa ko sabis da yake bayarwa.\n"
+                             "2. *Mai Saye (Buyer) Ya Amince Ya Biya:* Mai saye ya tabbatar zai biya kuɗin, amma bai biya kai tsaye ga mai siyarwa ba.\n"
+                             "3. *Admin Ya Tabbatar da Biya zuwa Escrow:* Mai saye zai tura kuɗin zuwa asusun escrow (asusun amana) na bot. Admin zai tabbatar cewa kuɗin sun shiga asusun escrow.\n"
+                             "4. *Mai Siyarwa Ya Tura Kayan/Sabis:* Bayan Admin ya tabbatar kuɗin suna escrow, mai siyarwa zai tura abin da aka siyarwa ko ya kammala sabis ɗin.\n"
+                             "5. *Mai Saye Ya Tabbatar da Karɓa:* Mai saye zai tabbatar cewa ya karɓi abin da aka siyar masa kuma yana cikin yanayi mai kyau.\n"
+                             "6. *Admin Ya Saki Kuɗi:* Bayan mai saye ya tabbatar, Admin zai saki kuɗin daga asusun escrow zuwa asusun mai siyarwa.\n"
+                             "7. *An Kammala Ciniki:* An kammala ciniki cikin nasara da aminci ga duka bangarorin biyu.",
         "security_guide_text": "🛡️ *Jagorar Tsaro da Taimako:*\n🔰 [Fara Ciniki](https://t.me/c/2481223102/27)\n👤 [Buyer Guide](https://t.me/c/2481223102/28)\n💼 [Seller Guide](https://t.me/c/2481223102/29)",
-        "back_to_main_menu_button": "⬅️ Komawa Babban Menu", # New button text for returning to main menu
+        "back_to_main_menu_button": "⬅️ Komawa Babban Menu",
 
         "start_deal_prompt": "Danna 👥 *Fara Ciniki* domin ƙirƙirar rukuni. Buyer da Seller su shiga, bot zai jagoranta.",
         "create_group_instructions": "🔐 Don fara ciniki, ku ƙirƙiri rukuni mai suna *{title}*, sannan ku saka bot din: @HausaEscrowBot.\nBuyer da Seller su shiga, bot zai jagoranta.",
@@ -190,21 +196,28 @@ MESSAGES = {
         "no_deal_to_cancel": "❗ Babu bayanin ciniki a nan da za a soke.",
 
         "choose_language": "Please choose your language / Da fatan zaɓi yarenka:",
-        "language_set_ha": "An saita yarenka. Da fatan za ka share bayanai (clear data) kuma ka sake danna /start.", # Updated message
-        "language_set_en": "Your language has been set up. Please clear data and click /start again." # Updated message
+        "language_set_ha": "An saita yarenka. Da fatan za ka share bayanai (clear data) kuma ka sake danna /start.",
+        "language_set_en": "Your language has been set up. Please clear data and click /start again."
     },
     "EN": {
         "welcome": "⚜️ Hausa Escrow Bot ⚜️ v.1\n\nWelcome to Hausa Escrow Bot! This bot provides secure (escrow) services for your trades on Telegram. 🔒\n\n💰 *ESCROW FEES:*\n- 5% if the amount exceeds $100\n- $5 if it's less than $100\n\n🌟 *UPDATES - PROOF:*\n✅ COMPLETED TRADES: 0\n⚖️ DISPUTES RESOLVED: 0\n\n🛒 Type /buyer address or /seller account\n📜 Type /menu to see all features\n\n@HausaEscrowBot – For secure trading!",
         "start_escrow_button": "🚀 Start Escrow",
         "how_it_works_button": "📘 How Escrow Works",
-        "security_guide_button": "💬 Security Guide", # Updated text for the button
+        "security_guide_button": "💬 Security Guide",
         "contact_admin_button": "📞 Contact Admin",
         "create_group_button": "👥 Create Trade (Create Group)",
 
-        "how_it_works_text": "📘 *HOW ESCROW WORKS:*\n1. Seller provides details\n2. Buyer agrees to pay\n3. Admin confirms payment\n4. Seller sends goods\n5. Buyer confirms receipt\n6. Admin releases funds\n7. Trade successfully completed",
-        # Updated Security Guide Text
+        "how_it_works_text": "📘 *HOW ESCROW WORKS:*\n"
+                             "This process helps ensure security for both buyer and seller.\n\n"
+                             "1. *Seller Provides Details:* The seller provides full details about the item they are selling or the service they are offering.\n"
+                             "2. *Buyer Agrees to Pay:* The buyer confirms they will pay the amount, but they do not pay directly to the seller.\n"
+                             "3. *Admin Confirms Payment to Escrow:* The buyer sends the funds to the bot's escrow account (trust account). The admin confirms that the funds have entered the escrow account.\n"
+                             "4. *Seller Delivers Goods/Service:* After the admin confirms the funds are in escrow, the seller delivers the item or completes the service.\n"
+                             "5. *Buyer Confirms Receipt:* The buyer confirms that they have received the item and it is in good condition.\n"
+                             "6. *Admin Releases Funds:* After the buyer confirms, the admin releases the funds from the escrow account to the seller's account.\n"
+                             "7. *Trade Completed:* The trade is successfully completed securely for both parties.",
         "security_guide_text": "🛡️ *Security and Support Guide:*\n🔰 [Start Trade](https://t.me/c/2481223102/27)\n👤 [Buyer Guide](https://t.me/c/2481223102/28)\n💼 [Seller Guide](https://t.me/c/2481223102/29)",
-        "back_to_main_menu_button": "⬅️ Back to Main Menu", # New button text for returning to main menu
+        "back_to_main_menu_button": "⬅️ Back to Main Menu",
 
         "start_deal_prompt": "Click 👥 *Create Trade* to create a group. Buyer and Seller should join, the bot will guide.",
         "create_group_instructions": "🔐 To start a trade, create a group named *{title}*, then add the bot: @HausaEscrowBot.\nBuyer and Seller should join, the bot will guide.",
@@ -262,37 +275,4 @@ MESSAGES = {
         "current_status": "📊 Your status in Hausa Escrow: {status}",
         "no_deal_record": "No trade record at the moment.",
         "you_are_buyer": "You are the *buyer* in a trade in group: `{chat_id}`. Stage: *{stage}*.",
-        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}`. Stage: *{stage}*.",
-
-        "deal_cancelled_message": "❗ Trade between @{buyer_username} and @{seller_username} has been cancelled.",
-        "no_deal_to_cancel": "❗ No trade information here to cancel.",
-
-        "choose_language": "Please choose your language / Da fatan zaɓi yarenka:",
-        "language_set_ha": "An saita yarenka. Da fatan za ka share bayanai (clear data) kuma ka sake danna /start.", # Updated message
-        "language_set_en": "Your language has been set up. Please clear data and click /start again." # Updated message
-    }
-}
-
-def get_message(user_id, key, **kwargs):
-    """Retrieves a message in the user's preferred language."""
-    lang = get_user_language(user_id)
-    message_template = MESSAGES.get(lang, MESSAGES["HA"]).get(key, MESSAGES["HA"][key])
-    return message_template.format(**kwargs)
-
-# --- Helper Function ---
-def generate_code():
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
-
-# --- Start Handler ---
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
-    lang = get_user_language(user_id)
-
-    keyboard = [
-        [InlineKeyboardButton(get_message(user_id, "start_escrow_button"), callback_data="startdeal")],
-        [InlineKeyboardButton(get_message(user_id, "how_it_works_button"), callback_data="howitworks")],
-        # Removed "Terms of Use" button
-        [InlineKeyboardButton(get_message(user_id, "security_guide_button"), callback_data="guides")], # Updated button text
-        [InlineKeyboardButton(get_message(user_id, "contact_admin_button"), url="https://t.me/HausaEscrowSupport")],
-        [InlineKeyboardButton(get_message(user_id, "create_group_button"), callback_data="create_group")],
-        [InlineKeyboardButton(get_message(
+        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}
