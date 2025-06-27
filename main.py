@@ -59,7 +59,7 @@ def save_deal(deal_data):
         cursor.execute('''
             INSERT OR REPLACE INTO deals (chat_id, buyer_id, buyer_username, buyer_address, seller_id, seller_username, seller_account, stage)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
+        ', (
             deal_data['chat_id'], deal_data['buyer_id'], deal_data['buyer_username'], deal_data['buyer_address'],
             deal_data.get('seller_id'), deal_data.get('seller_username'), deal_data.get('seller_account'), deal_data['stage']
         ))
@@ -275,4 +275,4 @@ MESSAGES = {
         "current_status": "📊 Your status in Hausa Escrow: {status}",
         "no_deal_record": "No trade record at the moment.",
         "you_are_buyer": "You are the *buyer* in a trade in group: `{chat_id}`. Stage: *{stage}*.",
-        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}
+        "you_are_seller": "You are the *seller* in a trade in group: `{chat_id}`.
